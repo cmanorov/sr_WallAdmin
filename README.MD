@@ -26,18 +26,26 @@ Resultado? Um painel extremamente responsivo e impacto **zero** na performance d
   * **Armamento:** Exibe a arma atual equipada na mão do jogador (mapeamento via `weapons.lua`).
   * **Veículos:** Mostra o modelo e a placa do veículo em que o jogador está.
 * **Escalonamento Dinâmico (Dynamic Scale):** O tamanho das fontes e o espaçamento (`dynamicGap`) ajustam-se automaticamente dependendo da distância real entre o admin e o jogador.
-* **Culling de Renderização:** O script utiliza `IsSphereVisible` e verificação matemática de raio (`Config.MaxDistance`) para só usar poder de processamento da placa de vídeo se o jogador estiver de fato na área de visão/renderização.
-* **Staff Awareness:** Tags inteligentes notificam o admin se o alvo está `[Invisível]`, se é um membro da `[Staff]`, ou se também está com o `[Wall]` ativado (evitando confusões na hora da moderação).
+* **Culling de Renderização & UX Limpa:** Utiliza `IsSphereVisible` e matemática de raio para só renderizar o que está no campo de visão. Além disso, o script possui *Self-Hide*, ocultando as informações do próprio administrador para manter o centro da tela limpo.
+* **Staff Awareness:** Tags inteligentes notificam o admin se o alvo está `[Invisível]`, se é um membro da `[Staff]`, ou se também está com o `[Wall]` ativado.
 
 ---
 
-## 📦 Universal Multi-Framework
+## 🔒 Segurança e Auditoria (Anti-Exploit)
+
+A maioria dos scripts de moderação são vulneráveis a *modders* (cheaters) usando executores Lua. O **Studio Reborn Wall** foi blindado com arquitetura *Server-Authoritative*:
+
+* **Validação Backend:** O comando `/wall` e a liberação de acesso ao cache de jogadores são validados estritamente no lado do Servidor. É impossível um cheater forçar a ativação do painel via injeção de eventos no client.
+* **Logs via Webhook (Discord):** Integração nativa de auditoria. Sempre que um staff ativa ou desativa o Wall, o servidor formata e envia um Embed automático para o Discord contendo: *Nome do Personagem, Passaporte, ID in-game, Steam Hex, License e ping automático do Discord ID do administrador.*
+
+---
 
 O resource foi desenhado para ser "Plug and Play" nas maiores bases da atualidade. 
-Basta abrir o `config.lua` e definir a sua base:
+Basta abrir o `config.lua` e definir a sua base e o seu Webhook:
 
 ```lua
 Config.Framework = 'qbox' -- Opções: 'qbox', 'qbcore', 'esx', 'vrp', 'standalone'
+Config.WebhookURL = 'SEU_LINK_AQUI' -- Opcional: Deixe vazio para desativar os logs
 
 ```
 
