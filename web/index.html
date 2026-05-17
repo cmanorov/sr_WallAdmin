@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studio Reborn - Wall Admin</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="ui-container" class="hidden">
+        <div class="panel">
+            <div class="glow-top"></div>
+            
+            <header>
+                <div class="title-area">
+                    <h1>WALL ADMIN</h1>
+                    <p>Controle de Módulos</p>
+                </div>
+                <button id="close-btn" class="close-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </header>
+
+            <main class="modules-list">
+                <div class="toggle-row primary" id="row-base">
+                    <span class="label">Wall Base (Nomes & Vida)</span>
+                    <label class="switch">
+                        <input type="checkbox" id="toggle-base" data-module="base">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="toggle-row disabled" id="row-lines">
+                    <span class="label">Traçados (Linhas)</span>
+                    <label class="switch">
+                        <input type="checkbox" id="toggle-lines" data-module="lines" disabled>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="toggle-row disabled" id="row-weapons">
+                    <span class="label">Armamento Equipado</span>
+                    <label class="switch">
+                        <input type="checkbox" id="toggle-weapons" data-module="weapons" disabled>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="toggle-row disabled" id="row-vehicles">
+                    <span class="label">Veículo Atual</span>
+                    <label class="switch">
+                        <input type="checkbox" id="toggle-vehicles" data-module="vehicles" disabled>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </main>
+
+            <footer>
+                <span>POWERED BY STUDIO REBORN</span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
