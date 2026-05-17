@@ -30,7 +30,7 @@ local function ProcessPlayerStates()
     playerStates = {} 
     for _, player in ipairs(currentPlayersData) do
         local playerId = GetPlayerFromServerId(tonumber(player.id))
-        if playerId ~= -1 then
+        if playerId ~= -1 and playerId ~= myPlayerId then
             local ped = GetPlayerPed(playerId)
             if DoesEntityExist(ped) then
                 local isVisible = IsEntityVisible(ped)
