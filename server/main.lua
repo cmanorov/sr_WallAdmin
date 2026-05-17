@@ -45,6 +45,23 @@ local function GetAdminDetails(src)
     return steamName, charName, cid
 end
 
+local function HasAdminPermission(src)
+    if Config.Framework == 'qbox' or Config.Framework == 'qbcore' then
+        local QBCore = exports['qb-core']:GetCoreObject()
+        return QBCore.Functions.HasPermission(src, 'admin')
+    elseif Config.Framework == 'esx' then
+        local ESX = exports['es_extended']:getSharedObject()
+        local xPlayer = ESX.GetPlayerFromId(tonumber(src))
+        return (xPlayer and xPlayer.getGroup() ~= 'user')
+    elseif Config.Framework == 'vrp' then
+        local vRP = Proxy.getInterface("vRP")
+        local user_id = vRP.getUserId(src)
+        return vRP.hasPermission(user_id, "admin.permissao")
+    else
+        return IsPlayerAceAllowed(src, "command.wall")
+    end
+end
+
 local function SendWallLog(src, state)
     if not Config.WebhookURL or Config.WebhookURL == "" then return end
 
@@ -76,6 +93,15 @@ local function SendWallLog(src, state)
 
     PerformHttpRequest(Config.WebhookURL, function(err, text, headers) end, 'POST', json.encode({ username = "Studio Reborn Logs", embeds = embed }), { ['Content-Type'] = 'application/json' })
 end
+
+RegisterCommand('wall', function(source)
+    if source == 0 then return end
+    if HasAdminPermission(source) then
+        TriggerClientEvent('studioreborn:client:openWallUI', source)
+    else
+        TriggerClientEvent('chat:addMessage', source, { args = { '^1[SISTEMA]', 'Você não tem permissão para acessar o painel de wall.' } })
+    end
+end, false)
 
 local function GetPlayersData()
     local players = {}
@@ -153,6 +179,10 @@ end)
 
 RegisterNetEvent('studioreborn:server:toggleWallState', function(state)
     local src = source
+    if not HasAdminPermission(src) then
+        print(string.format("^1[Studio Reborn] ALERTA DE SEGURANÇA: O ID %s tentou ativar o Wall via injection sem ter permissão!^0", src))
+        return
+    end
     if state then
         activeWallUsers[src] = true
     else

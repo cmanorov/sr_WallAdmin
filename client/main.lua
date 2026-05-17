@@ -107,7 +107,7 @@ local function CloseWallUI()
     SendNUIMessage({ action = "hideUI" })
 end
 
-RegisterCommand('wall', function()
+RegisterNetEvent('studioreborn:client:openWallUI', function()
     SetNuiFocus(true, true)
     SendNUIMessage({
         action = "showUI",
